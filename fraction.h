@@ -1,5 +1,5 @@
 #pragma once
-#include"funct.h"
+#include"interfaceFunct.h"
 #include<iostream>
 using namespace std;
 
@@ -28,28 +28,63 @@ typedef struct fraction{
             cout<<tu<<"/"<<mau;
         }
     }
+    double value(){
+        return tu*1.0/mau;
+    }
 }Frac;
 
-Frac add(Frac &a, Frac b){
+Frac add(Frac a, Frac b){
     long long temp = a.mau;
     a.mau =a.mau* b.mau;
     a.tu = a.tu*b.mau + temp*b.tu;
     a.rutgon();
     return a;
 }
-Frac add(Frac &a, long long b){
+Frac add(Frac a, long long b){
     a.tu = a.mau*b + a.tu;
     a.rutgon();
     return a;
 }
-Frac multi(Frac &a, Frac b){
+Frac multi(Frac a, Frac b){
     a.tu = a.tu*b.tu;
     a.mau = a.mau*b.mau;
     a.rutgon();
     return a;
 }
-Frac multi(Frac &a, long long b){
+Frac multi(Frac a, long long b){
     a.tu = a.tu*b;
     a.rutgon();
     return a;
+}
+Frac divide(Frac a, Frac b){
+    long long temp = b.tu;
+    b.tu = b.mau;
+    b.mau = temp;
+    Frac res = multi(a, b);
+    res.rutgon();
+    return res;
+}
+Frac divide(Frac a, long long b){
+    Frac res;
+    res.tu = a.tu;
+    res.mau = a.mau*b;
+    res.rutgon();
+    return res;
+}
+bool equal(Frac a, Frac b){
+    a.rutgon();
+    b.rutgon();
+    if(a.tu==b.tu && a.mau==b.mau){
+        return true;
+    }
+    return false;
+}
+bool equal(Frac a, long long b){
+    a.rutgon();
+    if(a.mau!=1) return false;
+    else{
+        if(a.tu==b) return true;
+        else return false;
+    }
+    return false;
 }
